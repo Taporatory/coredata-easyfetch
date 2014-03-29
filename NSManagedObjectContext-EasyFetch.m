@@ -39,8 +39,8 @@
 
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
 {
-  return [self fetchObjectsForEntityName:entityName sortWith:nil
-                           withPredicate:nil];
+    return [self fetchObjectsForEntityName:entityName sortWith:nil
+                             withPredicate:nil];
 }
 
 #pragma mark -
@@ -50,15 +50,15 @@
                             sortByKey:(NSString*)key
                             ascending:(BOOL)ascending
 {
-  return [self fetchObjectsForEntityName:entityName sortByKey:key
-                               ascending:ascending withPredicate:nil];
+    return [self fetchObjectsForEntityName:entityName sortByKey:key
+                                 ascending:ascending withPredicate:nil];
 }
 
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
                              sortWith:(NSArray*)sortDescriptors
 {
-  return [self fetchObjectsForEntityName:entityName sortWith:sortDescriptors
-                           withPredicate:nil];
+    return [self fetchObjectsForEntityName:entityName sortWith:sortDescriptors
+                             withPredicate:nil];
 }
 
 #pragma mark -
@@ -67,21 +67,21 @@
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
                         withPredicate:(NSPredicate*)predicate
 {
-  return [self fetchObjectsForEntityName:entityName sortWith:nil
-                           withPredicate:predicate];
+    return [self fetchObjectsForEntityName:entityName sortWith:nil
+                             withPredicate:predicate];
 }
 
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
                   predicateWithFormat:(NSString*)predicateFormat, ...
 {
-  va_list variadicArguments;
-  va_start(variadicArguments, predicateFormat);
-  NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
-                                                  arguments:variadicArguments];
-  va_end(variadicArguments);
-
-  return [self fetchObjectsForEntityName:entityName sortWith:nil
-                           withPredicate:predicate];
+    va_list variadicArguments;
+    va_start(variadicArguments, predicateFormat);
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
+                                                    arguments:variadicArguments];
+    va_end(variadicArguments);
+    
+    return [self fetchObjectsForEntityName:entityName sortWith:nil
+                             withPredicate:predicate];
 }
 
 #pragma mark -
@@ -92,51 +92,51 @@
                             ascending:(BOOL)ascending
                         withPredicate:(NSPredicate*)predicate
 {
-  NSSortDescriptor* sort = [[NSSortDescriptor alloc] initWithKey:key
-                                                       ascending:ascending];
-
+    NSSortDescriptor* sort = [[NSSortDescriptor alloc] initWithKey:key
+                                                         ascending:ascending];
+    
 #if !__has_feature(objc_arc)
-  [sort autorelease];
+    [sort autorelease];
 #endif
-
-  return [self fetchObjectsForEntityName:entityName sortWith:[NSArray
-                         arrayWithObject:sort] withPredicate:predicate];
+    
+    return [self fetchObjectsForEntityName:entityName sortWith:[NSArray
+                                                                arrayWithObject:sort] withPredicate:predicate];
 }
 
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
                              sortWith:(NSArray*)sortDescriptors
                         withPredicate:(NSPredicate*)predicate
 {
-  NSEntityDescription* entity = [NSEntityDescription entityForName:entityName
-                                            inManagedObjectContext:self];
-  NSFetchRequest* request = [[NSFetchRequest alloc] init];
-
+    NSEntityDescription* entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:self];
+    NSFetchRequest* request = [[NSFetchRequest alloc] init];
+    
 #if !__has_feature(objc_arc)
-  [request autorelease];
+    [request autorelease];
 #endif
-
-  [request setEntity:entity];
-
-  if (predicate)
-  {
-    [request setPredicate:predicate];
-  }
-
-  if (sortDescriptors)
-  {
-    [request setSortDescriptors:sortDescriptors];
-  }
-
-  NSError* error = nil;
-  NSArray* results = [self executeFetchRequest:request error:&error];
-
-  if (error != nil)
-  {
-    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    
+    [request setEntity:entity];
+    
+    if (predicate)
+    {
+        [request setPredicate:predicate];
+    }
+    
+    if (sortDescriptors)
+    {
+        [request setSortDescriptors:sortDescriptors];
+    }
+    
+    NSError* error = nil;
+    NSArray* results = [self executeFetchRequest:request error:&error];
+    
+    if (error != nil)
+    {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         [NSException raise:NSGenericException format:@"%@", [error description]];
-  }
-
-  return results;
+    }
+    
+    return results;
 }
 
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
@@ -144,27 +144,111 @@
                             ascending:(BOOL)ascending
                   predicateWithFormat:(NSString*)predicateFormat, ...
 {
-  va_list variadicArguments;
-  va_start(variadicArguments, predicateFormat);
-  NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
-                                                  arguments:variadicArguments];
-  va_end(variadicArguments);
-
-  return [self fetchObjectsForEntityName:entityName sortByKey:key
-                               ascending:ascending withPredicate:predicate];
+    va_list variadicArguments;
+    va_start(variadicArguments, predicateFormat);
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
+                                                    arguments:variadicArguments];
+    va_end(variadicArguments);
+    
+    return [self fetchObjectsForEntityName:entityName sortByKey:key
+                                 ascending:ascending withPredicate:predicate];
 }
 
 - (NSArray*)fetchObjectsForEntityName:(NSString*)entityName
                              sortWith:(NSArray*)sortDescriptors
                   predicateWithFormat:(NSString*)predicateFormat, ...
 {
-  va_list variadicArguments;
-  va_start(variadicArguments, predicateFormat);
-  NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
-                                                  arguments:variadicArguments];
-  va_end(variadicArguments);
-
-  return [self fetchObjectsForEntityName:entityName sortWith:sortDescriptors
-                           withPredicate:predicate];
+    va_list variadicArguments;
+    va_start(variadicArguments, predicateFormat);
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
+                                                    arguments:variadicArguments];
+    va_end(variadicArguments);
+    
+    return [self fetchObjectsForEntityName:entityName sortWith:sortDescriptors
+                             withPredicate:predicate];
 }
+
+//- (NSManagedObject*)fetchObjectForForEntityName:(NSString*)entityName
+//                            predicateWithFormat:(NSString*)predicateFormat, ...
+
+
+#pragma mark -
+#pragma mark Fetch one
+
+- (NSManagedObject*)fetchObjectForEntityName:(NSString*)entityName
+                               withPredicate:(NSPredicate*)predicate
+{
+    NSArray *results = [self fetchObjectsForEntityName:entityName withPredicate:predicate];
+    if([results count] == 0)
+        return nil;
+    else {
+        if ([results count] > 1)
+            NSLog(@"WARNING: fetchObject for %@ with predicate %@ has returned %d results, expecting 1 or 0",entityName,predicate,[results count]);
+        return [results objectAtIndex:0];
+    }
+}
+
+- (NSManagedObject*)fetchObjectForEntityName:(NSString*)entityName
+                         predicateWithFormat:(NSString*)predicateFormat, ...
+{
+    va_list variadicArguments;
+    va_start(variadicArguments, predicateFormat);
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
+                                                    arguments:variadicArguments];
+    va_end(variadicArguments);
+    
+    return [self fetchObjectForEntityName:entityName withPredicate:predicate];
+}
+
+#pragma mark -
+#pragma mark Fetch or create one
+
+- (NSManagedObject*)fetchOrCreateObjectForEntityName:(NSString*)entityName
+                                       withPredicate:(NSPredicate*)predicate
+{
+    NSManagedObject *result = [self fetchObjectForEntityName:entityName withPredicate:predicate];
+    if(result == nil) {
+        result = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self];
+    }
+    return result;
+}
+
+- (NSManagedObject*)fetchOrCreateObjectForEntityName:(NSString*)entityName
+                                 predicateWithFormat:(NSString*)predicateFormat, ...
+{
+    va_list variadicArguments;
+    va_start(variadicArguments, predicateFormat);
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
+                                                    arguments:variadicArguments];
+    va_end(variadicArguments);
+    
+    return [self fetchOrCreateObjectForEntityName:entityName withPredicate:predicate];
+}
+
+
+
+#pragma mark -
+#pragma mark Delete by predicate
+
+- (void)deleteObjectsForEntityName:(NSString*)entityName
+                     withPredicate:(NSPredicate*)predicate
+{
+    NSArray *results = [self fetchObjectsForEntityName:entityName withPredicate:predicate];
+    for (NSManagedObject *result in results) {
+        [self deleteObject:result];
+    }
+}
+
+- (void)deleteObjectsForEntityName:(NSString*)entityName
+               predicateWithFormat:(NSString*)predicateFormat, ...
+{
+    va_list variadicArguments;
+    va_start(variadicArguments, predicateFormat);
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:predicateFormat
+                                                    arguments:variadicArguments];
+    va_end(variadicArguments);
+    
+    return [self deleteObjectsForEntityName:entityName withPredicate:predicate];
+}
+
 @end
